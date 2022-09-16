@@ -40,8 +40,7 @@ class NbuCurrency:
         response_currency = requests.request("GET", api_url_currency_data)
         if response_currency.status_code == requests.codes.ok:
             raw_currency_data = response_currency.json()
-            raw_currencies_list = [element['cc'] for element in raw_currency_data]
-            currencies_list = [element.lower() for element in raw_currencies_list]
+            currencies_list = [element['cc'] for element in raw_currency_data]
             return currencies_list
         else:
             print("Error:", response_currency.status_code, response_currency.text)
@@ -53,7 +52,7 @@ class NbuCurrency:
 def main(currency, exchange_date):
     try:
         currencies_list = NbuCurrency.get_list_of_currencies()
-        currency = currency.lower()
+        currency = currency.upper()
         if currency not in currencies_list:
             raise NameError
         if exchange_date is not None:
@@ -66,13 +65,13 @@ def main(currency, exchange_date):
             else:
                 raise ValueError
         else:
-            usd_to_uan_data = NbuCurrency(currency=currency, exchange_date=exchange_date)
+            usd_to_uan_data = NbuCurrency(currency=currency)
             usd_to_uan_data.data_printer()
     except ValueError:
         print(f'Invalid exchange_date {exchange_date}!')
         raise SystemExit(1)
     except NameError:
-        print(f"{currency.upper()} currency isn't supported!")
+        print(f"{currency} currency isn't supported!")
         raise SystemExit(1)
 
 
