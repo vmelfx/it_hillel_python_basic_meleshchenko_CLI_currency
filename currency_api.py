@@ -31,9 +31,14 @@ class NbuCurrency:
         response_currency = requests.request("GET", api_url_currency_data)
         if response_currency.status_code == requests.codes.ok:
             raw_currency_data: list = response_currency.json()
-            return raw_currency_data
+            if raw_currency_data:
+                return raw_currency_data
+            else:
+                print("En empty response from API. Program will be terminated")
+                raise SystemExit(1)
         else:
             print("Error:", response_currency.status_code, response_currency.text)
+            raise SystemExit(1)
 
     @staticmethod
     def get_list_of_currencies():
@@ -41,10 +46,15 @@ class NbuCurrency:
         response_currency = requests.request("GET", api_url_currency_data)
         if response_currency.status_code == requests.codes.ok:
             raw_currency_data: list = response_currency.json()
-            currencies_list: list = [element['cc'] for element in raw_currency_data]
-            return currencies_list
+            if raw_currency_data:
+                currencies_list: list = [element['cc'] for element in raw_currency_data]
+                return currencies_list
+            else:
+                print("En empty response from API. Program will be terminated")
+                raise SystemExit(1)
         else:
             print("Error:", response_currency.status_code, response_currency.text)
+            raise SystemExit(1)
 
 
 @click.command()
