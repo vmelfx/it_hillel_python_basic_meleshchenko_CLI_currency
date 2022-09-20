@@ -8,39 +8,40 @@ class NbuCurrency:
     print_decorator_lower = "=============="
 
     def __init__(self, currency, exchange_date=None):
-        self.currency = currency
-        self.exchange_date = exchange_date
+        self.currency: str = currency
+        self.exchange_date: str = exchange_date
 
     def data_printer(self):
-        currency_data = self.get_currency_data(self.currency, self.exchange_date)
-        currency_rate = currency_data[0]['rate']
-        currency_id = currency_data[0]['cc']
+        currency_data: list = self.get_currency_data(self.currency, self.exchange_date)
+        currency_rate: str = currency_data[0]['rate']
+        currency_id: str = currency_data[0]['cc']
         print(self.print_decorator_upper)
         print(currency_id)
         print(currency_rate)
         print(self.print_decorator_lower)
 
-    def get_currency_data(self, currency, exchange_date):
+    @staticmethod
+    def get_currency_data(currency, exchange_date) -> list:
         if exchange_date is None:
-            api_url_currency_data = f"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?" \
+            api_url_currency_data: str = f"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?" \
                                     f"valcode={currency}&json"
         else:
-            api_url_currency_data = f"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?" \
+            api_url_currency_data: str = f"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?" \
                                     f"valcode={currency}&date={exchange_date}&json"
         response_currency = requests.request("GET", api_url_currency_data)
         if response_currency.status_code == requests.codes.ok:
-            raw_currency_data = response_currency.json()
+            raw_currency_data: list = response_currency.json()
             return raw_currency_data
         else:
             print("Error:", response_currency.status_code, response_currency.text)
 
     @staticmethod
     def get_list_of_currencies():
-        api_url_currency_data = f"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?json"
+        api_url_currency_data: str = f"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?json"
         response_currency = requests.request("GET", api_url_currency_data)
         if response_currency.status_code == requests.codes.ok:
-            raw_currency_data = response_currency.json()
-            currencies_list = [element['cc'] for element in raw_currency_data]
+            raw_currency_data: list = response_currency.json()
+            currencies_list: list = [element['cc'] for element in raw_currency_data]
             return currencies_list
         else:
             print("Error:", response_currency.status_code, response_currency.text)
@@ -52,7 +53,7 @@ class NbuCurrency:
 def main(currency, exchange_date):
     try:
         currencies_list = NbuCurrency.get_list_of_currencies()
-        currency = currency.upper()
+        currency: str = currency.upper()
         if currency not in currencies_list:
             raise NameError
         if exchange_date is not None:
