@@ -43,3 +43,5 @@ The same is about date: if invalid date provided you will get an error:
 ```
 Please note, that the minimum supported year is 1997 and the maxim supported year is current.  
 Good luck!
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
