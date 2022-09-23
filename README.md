@@ -1,4 +1,4 @@
-# Cli currency exchange rates
+# CLI currency exchange rates
 
 ## Description
 Application for obtaining exchange rates for grivna to other specified currency on a specific date
