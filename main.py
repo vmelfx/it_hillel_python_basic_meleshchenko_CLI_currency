@@ -51,7 +51,7 @@ class NbuCurrency:
             raise SystemExit(1)
 
     @staticmethod
-    def get_list_of_currencies():
+    def get_list_of_currencies() -> list:
         """
         This method on each startup asks api about all supported currencies.
         Then, depending on user input program will decide: can it get data from api or not.
