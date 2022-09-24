@@ -7,11 +7,11 @@ class NbuCurrency:
     print_decorator_upper = "--------------"
     print_decorator_lower = "=============="
 
-    def __init__(self, currency, exchange_date=None):
+    def __init__(self, currency, exchange_date=None) -> None:
         self.currency: str = currency
         self.exchange_date: str = exchange_date
 
-    def data_printer(self):
+    def data_printer(self) -> None:
         """
         This method is responsible for data output. It takes all required data and prints it into console.
         """
